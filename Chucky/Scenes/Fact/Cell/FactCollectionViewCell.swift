@@ -5,33 +5,45 @@
 //  Created by Andre Nogueira on 16/06/20.
 //  Copyright © 2020 Andre Nogueira. All rights reserved.
 //
-
+import Foundation
 import UIKit
 import Cartography
 
 class FactCollectionViewCell: UICollectionViewCell {
     
-    private let name: UILabel = {
-          let label = UILabel(frame: .zero)
-          label.textAlignment = .center
-          return label
+    @IBOutlet weak var contentFeedView: UIView? { didSet {
+            contentFeedView?.backgroundColor = .black
+        }
+    }
+    
+    private let title: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.textAlignment = .left
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 32)
+        return label
     }()
       
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         self.setup()
     }
     
+    func set(with item: Fact) {
+        title.text = item.value
+    }
+    
     private func setup() {
-        name.text = "TEST"
+        self.backgroundColor = .black
+        self.contentFeedView?.addSubview(title)
         
-        self.contentView.addSubview(name)
-        
-        constrain(contentView, name) { (contentView, name) in
-            name.center == contentView.center
-            name.height == 25
-            name.width == 25
+        guard let contentFeedView = self.contentFeedView else { return }
+        constrain(contentFeedView, title) { (contentView, title) in
+            title.center == contentView.center
+            title.leading == contentView.leading
+            title.trailing == contentView.trailing
         }
     }
 

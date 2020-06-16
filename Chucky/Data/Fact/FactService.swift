@@ -11,18 +11,19 @@ import RxSwift
 import RxCocoa
 
 protocol FactServiceContract {
-    func search(with query: String) -> Single<SearchResponse>
+    func search(with query: String) -> Single<[Fact]>
 }
 
 class FactService: FactServiceContract {
     
     private let provider = ApiProvider<FactAPI>()
 
-    func search(with query: String) -> Single<SearchResponse> {
+    func search(with query: String) -> Single<[Fact]> {
         return self.provider
         .rx
         .request(.search(query: query))
         .mapDefault(SearchResponse.self)
+        .map { $0.result }
     }
     
 }

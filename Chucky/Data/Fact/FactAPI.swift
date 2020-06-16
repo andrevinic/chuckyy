@@ -42,15 +42,21 @@ extension FactAPI: TargetType {
 
         }
     }
+    var parameters: [String: Any]? {
+          switch self {
+         
+          case .search(let query):
+              return ["query": query]
+          }
+      }
     
     var task: Task {
-        switch self {
-        case .search(let query):
-            return .requestParameters(parameters: [
-                "query" : query
-            ], encoding: URLEncoding.queryString)
-        }
-    }
+           if let `parameters` = parameters {
+               return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+           } else {
+               return .requestPlain
+           }
+       }
     
     var headers: [String : String]? {
         return nil

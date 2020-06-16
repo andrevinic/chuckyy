@@ -17,8 +17,9 @@ class FactViewController: BaseViewController {
    
     private let collectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
+        viewLayout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
-        collectionView.backgroundColor = .green
+        collectionView.backgroundColor = .darkGray
         return collectionView
     }()
     
@@ -36,19 +37,40 @@ class FactViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bindProperties()
-
-        self.bindStyles()
+        
+        self.setup()
     }
     
-    private func bindProperties() {
-        self.view.backgroundColor = .white
-        self.view.addSubview(self.collectionView)
+    private func setup() {
+        self.setupCollectionView()
+        self.setupSearchView()
+        self.bindStyles()
+
+    }
+    
+    private func setupSearchView() {
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    private func setupCollectionView() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.register(cellType: FactCollectionViewCell.self)
+        self.view.backgroundColor = .white
+        self.view.addSubview(self.collectionView)
+        
+        self.viewModel
+            .onFetched
+            .drive(onNext: { [unowned self] in
+                self.collectionView.reloadData()
+            }).disposed(by: disposeBag)
+
     }
+    
     private func bindStyles() {
         
         self.collectionView.tintColor = .blue
@@ -60,23 +82,59 @@ class FactViewController: BaseViewController {
             collectionView.right == view.safeAreaLayoutGuide.right
         }
     }
+    
+    private func fact(indexPath: IndexPath) -> Fact? {
+        if self.viewModel.facts.isEmpty {
+            return nil
+        }
+        return self.viewModel.facts[indexPath.row]
+    }
 
 }
+
 
 extension FactViewController: UICollectionViewDelegate {
-    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let yourWidth = collectionView.bounds.width
+        let yourHeight = yourWidth
+
+       return CGSize(width: yourWidth, height: yourHeight)
+    }
 }
 
-extension FactViewController: UICollectionViewDataSource {
+extension FactViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return self.viewModel.facts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(with: FactCollectionViewCell.self, for: indexPath)
-
         
+        if let fact = self.fact(indexPath: indexPath) {
+            cell.set(with: fact)
+        }
         return cell
     }
     
+}
+//
+//extension FactViewController: UICollectionViewDelegateFlowLayout {
+//
+////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+////        let yourWidth = collectionView.bounds.width
+////        let yourHeight = yourWidth
+////
+////       return CGSize(width: yourWidth, height: yourHeight)
+////    }
+//}
+
+extension FactViewController: UISearchBarDelegate {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.viewModel.clearData()
+        guard let text = searchBar.text else {
+            return
+        }
+        self.viewModel.fetch(with: text)
+    }
 }

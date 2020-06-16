@@ -14,6 +14,12 @@ class FactViewModel: BaseViewModel {
 
     private let factService: FactServiceContract
     internal var facts: [Fact] = []
+    
+    private let _onFetched = PublishSubject<()>()
+    var onFetched: Driver<()> {
+        return self._onFetched.asDriver(onErrorJustReturn: ())
+    }
+    
     private var query: String = ""
     
     init(factService: FactServiceContract) {
@@ -30,8 +36,15 @@ class FactViewModel: BaseViewModel {
             .search(with: self.query)
             .defaultLoading(super.isLoading)
             .subscribe(onSuccess: { (response) in
-                print(response)
+                self.facts.append(contentsOf: response)
+                self._onFetched.onNext(())
             }, onError: self.handleError(error:))
         .disposed(by: disposeBag)
+    }
+    
+    func clearData() {
+        self.query = ""
+        self.facts.removeAll()
+        self._onFetched.onNext(())
     }
 }

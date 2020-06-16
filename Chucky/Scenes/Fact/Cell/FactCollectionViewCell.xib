@@ -15,14 +15,22 @@
                 <rect key="frame" x="0.0" y="0.0" width="222" height="125"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ayI-P4-XfH">
-                        <rect key="frame" x="-9" y="-2" width="240" height="128"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ayI-P4-XfH">
+                        <rect key="frame" x="0.0" y="0.0" width="222" height="125"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </view>
                 </subviews>
             </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ayI-P4-XfH" secondAttribute="trailing" id="IHu-Iz-GxN"/>
+                <constraint firstItem="ayI-P4-XfH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="PnN-mR-cs9"/>
+                <constraint firstItem="ayI-P4-XfH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="fQ3-lC-ma9"/>
+                <constraint firstAttribute="bottom" secondItem="ayI-P4-XfH" secondAttribute="bottom" id="hBC-tD-h8K"/>
+            </constraints>
             <size key="customSize" width="222" height="125"/>
+            <connections>
+                <outlet property="contentFeedView" destination="ayI-P4-XfH" id="YvC-LO-DGU"/>
+            </connections>
             <point key="canvasLocation" x="265.21739130434787" y="68.638392857142847"/>
         </collectionViewCell>
     </objects>

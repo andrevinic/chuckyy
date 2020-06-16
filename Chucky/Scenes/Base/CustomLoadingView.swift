@@ -25,7 +25,7 @@ class CustomLoadingView: UIView {
         self.addSubview(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.startAnimating()
-        indicator.style = .whiteLarge
+        indicator.style = .large
         self.addConstraints([
             indicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             indicator.centerXAnchor.constraint(equalTo: self.centerXAnchor)
