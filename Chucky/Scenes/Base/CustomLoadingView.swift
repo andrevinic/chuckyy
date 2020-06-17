@@ -25,7 +25,11 @@ class CustomLoadingView: UIView {
         self.addSubview(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.startAnimating()
-        indicator.style = .large
+        if #available(iOS 13.0, *) {
+            indicator.style = .large
+        } else {
+            // Fallback on earlier versions
+        }
         self.addConstraints([
             indicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             indicator.centerXAnchor.constraint(equalTo: self.centerXAnchor)

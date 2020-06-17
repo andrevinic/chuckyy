@@ -42,8 +42,8 @@ class FactCollectionViewCell: UICollectionViewCell {
         guard let contentFeedView = self.contentFeedView else { return }
         constrain(contentFeedView, title) { (contentView, title) in
             title.center == contentView.center
-            title.leading == contentView.leading
-            title.trailing == contentView.trailing
+            title.leading == contentView.leading + 20
+            title.trailing == contentView.trailing - 20
         }
     }
 

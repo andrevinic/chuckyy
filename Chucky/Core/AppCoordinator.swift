@@ -27,7 +27,11 @@ class AppCoordinator {
         let factViewModel = FactViewModel(factService: factService)
         let factViewController = FactViewController(viewModel: factViewModel)
         let navigationController = UINavigationController(rootViewController: factViewController)
-        navigationController.navigationBar.prefersLargeTitles = true
+        if #available(iOS 11.0, *) {
+            navigationController.navigationBar.prefersLargeTitles = true
+        } else {
+            // Fallback on earlier versions
+        }
         self.window.rootViewController = navigationController
         self.window.makeKeyAndVisible()
         

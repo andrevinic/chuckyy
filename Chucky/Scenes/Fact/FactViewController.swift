@@ -23,6 +23,14 @@ class FactViewController: BaseViewController {
         return collectionView
     }()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return .darkContent
+        } else {
+            return .default
+        }
+    }
+    
     override var baseViewModel: BaseViewModelContract? {
         return self.viewModel
     }
@@ -32,7 +40,7 @@ class FactViewController: BaseViewController {
     init(viewModel: FactViewModel) {
         self.viewModel = viewModel
         super.init()
-        
+        self.title = "Buscar"
     }
     
     override func viewDidLoad() {
@@ -48,12 +56,16 @@ class FactViewController: BaseViewController {
 
     }
     
+    @available(iOS 11.0, *)
     private func setupSearchView() {
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.placeholder = "busque o que desejar"
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        self.navigationController?.navigationBar.backgroundColor = .darkGray
+        self.searchController.searchBar.backgroundColor = .darkGray
+        
     }
     private func setupCollectionView() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,12 +83,13 @@ class FactViewController: BaseViewController {
 
     }
     
+    @available(iOS 11.0, *)
     private func bindStyles() {
         
         self.collectionView.tintColor = .blue
         
         constrain(view, collectionView) { (view, collectionView) in
-            collectionView.top == view.safeAreaLayoutGuide.top
+            collectionView.top == view.top
             collectionView.bottom == view.safeAreaLayoutGuide.bottom
             collectionView.left == view.safeAreaLayoutGuide.left
             collectionView.right == view.safeAreaLayoutGuide.right
@@ -96,10 +109,10 @@ class FactViewController: BaseViewController {
 extension FactViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let yourWidth = collectionView.bounds.width
-        let yourHeight = yourWidth
+        let width = collectionView.bounds.width
+        let height = width
 
-       return CGSize(width: yourWidth, height: yourHeight)
+       return CGSize(width: width, height: height)
     }
 }
 
@@ -118,16 +131,6 @@ extension FactViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
 }
-//
-//extension FactViewController: UICollectionViewDelegateFlowLayout {
-//
-////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-////        let yourWidth = collectionView.bounds.width
-////        let yourHeight = yourWidth
-////
-////       return CGSize(width: yourWidth, height: yourHeight)
-////    }
-//}
 
 extension FactViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -136,5 +139,11 @@ extension FactViewController: UISearchBarDelegate {
             return
         }
         self.viewModel.fetch(with: text)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.viewModel.clearData()
+        self.collectionView.reloadData()
+
     }
 }
