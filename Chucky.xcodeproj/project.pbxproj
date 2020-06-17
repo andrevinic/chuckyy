@@ -39,6 +39,9 @@
 		F09CAC35249869ED0028229C /* Global+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CAC34249869ED0028229C /* Global+Extensions.swift */; };
 		F09CAC3B249872FB0028229C /* FactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CAC39249872FB0028229C /* FactCollectionViewCell.swift */; };
 		F09CAC3C249872FB0028229C /* FactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F09CAC3A249872FB0028229C /* FactCollectionViewCell.xib */; };
+		F0E751192499B45C0015A919 /* TableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E751182499B45C0015A919 /* TableView+Extension.swift */; };
+		F0E7511C2499B4830015A919 /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E7511A2499B4830015A919 /* CategoriesTableViewCell.swift */; };
+		F0E7511D2499B4830015A919 /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0E7511B2499B4830015A919 /* CategoriesTableViewCell.xib */; };
 		F3E069759C4DB1BB6BCC3DC2 /* Pods_Chucky_ChuckyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFAC5DBA4FE7EAC7AC9E158F /* Pods_Chucky_ChuckyUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +107,9 @@
 		F09CAC34249869ED0028229C /* Global+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global+Extensions.swift"; sourceTree = "<group>"; };
 		F09CAC39249872FB0028229C /* FactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCollectionViewCell.swift; sourceTree = "<group>"; };
 		F09CAC3A249872FB0028229C /* FactCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FactCollectionViewCell.xib; sourceTree = "<group>"; };
+		F0E751182499B45C0015A919 /* TableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableView+Extension.swift"; sourceTree = "<group>"; };
+		F0E7511A2499B4830015A919 /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
+		F0E7511B2499B4830015A919 /* CategoriesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoriesTableViewCell.xib; sourceTree = "<group>"; };
 		FB4D99BA78FE6B58E9427B1D /* Pods_Chucky.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chucky.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -283,6 +289,7 @@
 				F09CAC30249869910028229C /* UIViewController+Extension.swift */,
 				F09CAC32249869B40028229C /* UICollectionView+Extension.swift */,
 				F09CAC34249869ED0028229C /* Global+Extensions.swift */,
+				F0E751182499B45C0015A919 /* TableView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -302,6 +309,8 @@
 			children = (
 				F09CAC39249872FB0028229C /* FactCollectionViewCell.swift */,
 				F09CAC3A249872FB0028229C /* FactCollectionViewCell.xib */,
+				F0E7511A2499B4830015A919 /* CategoriesTableViewCell.swift */,
+				F0E7511B2499B4830015A919 /* CategoriesTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -418,6 +427,7 @@
 			files = (
 				F09CAC3C249872FB0028229C /* FactCollectionViewCell.xib in Resources */,
 				F09CABDD24984BD20028229C /* LaunchScreen.storyboard in Resources */,
+				F0E7511D2499B4830015A919 /* CategoriesTableViewCell.xib in Resources */,
 				F09CABDA24984BD20028229C /* Assets.xcassets in Resources */,
 				F09CABD824984BD10028229C /* Main.storyboard in Resources */,
 			);
@@ -575,6 +585,7 @@
 				F09CAC052498529C0028229C /* Environment.swift in Sources */,
 				F09CAC31249869910028229C /* UIViewController+Extension.swift in Sources */,
 				F09CAC2B249860FA0028229C /* CustomLoadingView.swift in Sources */,
+				F0E7511C2499B4830015A919 /* CategoriesTableViewCell.swift in Sources */,
 				F09CAC2D249864F50028229C /* FactViewModel.swift in Sources */,
 				F09CAC0F24985AC60028229C /* FactService.swift in Sources */,
 				F09CAC23249860740028229C /* BaseViewController.swift in Sources */,
@@ -585,6 +596,7 @@
 				F09CAC1124985AD20028229C /* FactAPI.swift in Sources */,
 				F09CABD124984BD10028229C /* AppDelegate.swift in Sources */,
 				F09CAC1424985BB90028229C /* String+Extension.swift in Sources */,
+				F0E751192499B45C0015A919 /* TableView+Extension.swift in Sources */,
 				F09CAC1E24985EF30028229C /* AppCoordinator.swift in Sources */,
 				F09CAC29249860C60028229C /* Reachability.swift in Sources */,
 				F09CAC1C24985E4C0028229C /* Single+Extension.swift in Sources */,

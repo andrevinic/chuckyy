@@ -12,6 +12,7 @@ import Moya
 enum FactAPI {
     
     case search(query: String)
+    case categories
     
 }
 
@@ -25,6 +26,8 @@ extension FactAPI: TargetType {
         switch self {
         case .search:
             return "/search/"
+        case .categories:
+            return "/categories"
         }
     }
     
@@ -32,12 +35,16 @@ extension FactAPI: TargetType {
         switch self {
         case .search:
             return .get
+        case .categories:
+            return .get
         }
     }
     
     var sampleData: Data {
         switch self {
         case .search:
+            return Bundle.main.dataFromJsonFile(name: "mock_norris_response_success")
+        case .categories:
             return Bundle.main.dataFromJsonFile(name: "mock_norris_response_success")
 
         }
@@ -47,6 +54,8 @@ extension FactAPI: TargetType {
          
           case .search(let query):
               return ["query": query]
+          case .categories:
+                return nil
           }
       }
     
@@ -56,7 +65,7 @@ extension FactAPI: TargetType {
            } else {
                return .requestPlain
            }
-       }
+     }
     
     var headers: [String : String]? {
         return nil

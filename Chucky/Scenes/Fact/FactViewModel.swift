@@ -14,6 +14,12 @@ class FactViewModel: BaseViewModel {
 
     private let factService: FactServiceContract
     internal var facts: [Fact] = []
+    internal var categoriesList: [String] = []
+    
+    private let _onCategories = PublishSubject<[String]>()
+    var onCategories: Driver<[String]> {
+        return self._onCategories.asDriver(onErrorJustReturn: [])
+    }
     
     private let _onFetched = PublishSubject<()>()
     var onFetched: Driver<()> {
@@ -24,6 +30,17 @@ class FactViewModel: BaseViewModel {
     
     init(factService: FactServiceContract) {
         self.factService = factService
+    }
+    
+    func categories() {
+        self.factService
+            .categories()
+            .defaultLoading(super.isLoading)
+            .subscribe(onSuccess: { (response) in
+                self.categoriesList.append(contentsOf: response)
+                self._onCategories.onNext(response)
+            }, onError: self.handleError(error:))
+        .disposed(by: disposeBag)
     }
     
     func fetch(with query: String) {

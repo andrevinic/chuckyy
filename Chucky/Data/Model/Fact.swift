@@ -11,23 +11,23 @@ import Foundation
 struct Fact: Decodable {
     
     let categories: [String]
-    let icon_url: String?
+    let iconUrl: String?
     let id: String
     let value: String
     
     enum CodingKeys: String, CodingKey {
           case categories
-          case icon_url
+          case iconUrl
           case id
           case value
       }
     
     init(categories: [String] = [],
-          icon_url: String = "",
+          iconUrl: String = "",
           id: String = "",
           value: String = "") {
          self.categories = categories
-         self.icon_url = icon_url
+         self.iconUrl = iconUrl
          self.id = id
          self.value = value
      }
@@ -38,10 +38,10 @@ struct Fact: Decodable {
          if let categories = try container.decodeIfPresent([String].self, forKey: .categories) {
              self.categories = categories
          } else {
-             self.categories = ["unknown"]
+             self.categories = ["UNCATEGORIZED"]
          }
          
-         self.icon_url = try container.decodeIfPresent(String.self, forKey: .icon_url)
+         self.iconUrl = try container.decodeIfPresent(String.self, forKey: .iconUrl)
          self.id = try container.decode(String.self, forKey: .id)
          self.value = try container.decode(String.self, forKey: .value)
          

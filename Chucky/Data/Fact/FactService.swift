@@ -12,6 +12,7 @@ import RxCocoa
 
 protocol FactServiceContract {
     func search(with query: String) -> Single<[Fact]>
+    func categories() -> Single<[String]>
 }
 
 class FactService: FactServiceContract {
@@ -24,6 +25,13 @@ class FactService: FactServiceContract {
         .request(.search(query: query))
         .mapDefault(SearchResponse.self)
         .map { $0.result }
+    }
+    
+    func categories() -> Single<[String]> {
+        return self.provider
+        .rx
+        .request(.categories)
+        .map([String].self)
     }
     
 }

@@ -15,6 +15,12 @@ class FactViewController: BaseViewController {
 
     private let searchController = UISearchController(searchResultsController: nil)
    
+    private let tableView: UITableView = {
+        let tableView = UITableView(frame: .zero)
+        tableView.backgroundColor = .darkGray
+        return tableView
+    }()
+    
     private let collectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
         viewLayout.scrollDirection = .vertical
@@ -51,9 +57,14 @@ class FactViewController: BaseViewController {
     
     private func setup() {
         self.setupCollectionView()
+        self.setupTableView()
+
         self.setupSearchView()
         self.bindStyles()
-
+        self.fetchCategories()
+    }
+    private func fetchCategories() {
+        self.viewModel.categories()
     }
     
     @available(iOS 11.0, *)
@@ -73,6 +84,7 @@ class FactViewController: BaseViewController {
         self.collectionView.dataSource = self
         self.collectionView.register(cellType: FactCollectionViewCell.self)
         self.view.backgroundColor = .white
+        self.collectionView.alpha = 0.0
         self.view.addSubview(self.collectionView)
         
         self.viewModel
@@ -81,6 +93,20 @@ class FactViewController: BaseViewController {
                 self.collectionView.reloadData()
             }).disposed(by: disposeBag)
 
+    }
+    
+    private func setupTableView() {
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.register(cellType: CategoriesTableViewCell.self)
+        self.view.addSubview(self.tableView)
+
+        self.viewModel
+            .onCategories
+            .drive(onNext: { _ in
+                self.tableView.reloadData()
+            }).disposed(by: disposeBag)
+        
     }
     
     @available(iOS 11.0, *)
@@ -94,6 +120,13 @@ class FactViewController: BaseViewController {
             collectionView.left == view.safeAreaLayoutGuide.left
             collectionView.right == view.safeAreaLayoutGuide.right
         }
+        
+        constrain(view, tableView) { (view, tableView) in
+                   tableView.top == view.top
+                   tableView.bottom == view.safeAreaLayoutGuide.bottom
+                   tableView.left == view.safeAreaLayoutGuide.left
+                   tableView.right == view.safeAreaLayoutGuide.right
+               }
     }
     
     private func fact(indexPath: IndexPath) -> Fact? {
@@ -102,9 +135,31 @@ class FactViewController: BaseViewController {
         }
         return self.viewModel.facts[indexPath.row]
     }
+    
+    private func category(indexPath: IndexPath) -> String {
+        return self.viewModel.categoriesList[indexPath.row]
+    }
+    
+    private func categories() -> [String] {
+        return self.viewModel.categoriesList
+    }
 
+    private func hideCollectionView() {
+        self.collectionView.alpha = 0.0
+        self.tableView.alpha = 1.0
+    }
+    
+    private func hideTableView() {
+        self.collectionView.alpha = 1.0
+        self.tableView.alpha = 0.0
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.tableView.layoutSubviews()
+        self.tableView.layoutIfNeeded()
+    }
 }
-
 
 extension FactViewController: UICollectionViewDelegate {
 
@@ -117,6 +172,7 @@ extension FactViewController: UICollectionViewDelegate {
 }
 
 extension FactViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.viewModel.facts.count
     }
@@ -132,18 +188,57 @@ extension FactViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
 }
 
+extension FactViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.categories().count
+
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(with: CategoriesTableViewCell.self, for: indexPath)
+        cell.set(with: self.category(indexPath: indexPath))
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let category = self.category(indexPath: indexPath)
+        self.searchController.searchBar.text = category
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        self.searchController.searchBar.text = ""
+    }
+    
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        self.searchController.searchBar.text = ""
+
+    }
+    
+}
+
 extension FactViewController: UISearchBarDelegate {
+    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        hideTableView()
         self.viewModel.clearData()
-        guard let text = searchBar.text else {
+        guard let text = searchBar.text, !text.isEmpty else {
+            hideCollectionView()
             return
         }
         self.viewModel.fetch(with: text)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.text, text.isEmpty {
+            return
+        }
         self.viewModel.clearData()
-        self.collectionView.reloadData()
-
+        hideCollectionView()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.layoutIfNeeded()
+            self.view.layoutIfNeeded()
+        }
     }
+    
 }
