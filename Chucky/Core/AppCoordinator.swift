@@ -25,7 +25,7 @@ class AppCoordinator {
     private func navigateToHome() {
         let factService = FactService()
         let factViewModel = FactViewModel(factService: factService)
-        let factViewController = FactViewController(viewModel: factViewModel)
+        let factViewController = FactMainViewController(viewModel: factViewModel)
         let navigationController = UINavigationController(rootViewController: factViewController)
         if #available(iOS 11.0, *) {
             navigationController.navigationBar.prefersLargeTitles = true

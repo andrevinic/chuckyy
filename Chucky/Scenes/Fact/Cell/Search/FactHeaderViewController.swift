@@ -11,9 +11,22 @@ import RxCocoa
 import RxSwift
 import Cartography
 
-class SearchViewController: BaseViewController {
+class FactHeaderViewController: BaseViewController {
 
-    let collectionViewCategories: UICollectionView = {
+    private let outSearchPublish = PublishSubject<String>()
+    var outSearch: Driver<String> {
+        return self.outSearchPublish.asDriver(onErrorJustReturn: "")
+    }
+    
+    private let titleCategories: UILabel = {
+    
+        let title = UILabel()
+        title.text = "Categories"
+        title.font = UIFont(name: "System Light", size: 19)
+        return title
+    }()
+    
+    private let collectionViewCategories: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -26,7 +39,7 @@ class SearchViewController: BaseViewController {
     init(viewModel: FactViewModel) {
         self.viewModel = viewModel
         super.init()
-        self.title = "Buscar"
+        
     }
 
     override func viewDidLoad() {
@@ -34,14 +47,35 @@ class SearchViewController: BaseViewController {
         
         setupProperties()
         self.viewModel.categories()
-        
-        self.viewModel.onCategories
-            .drive(collectionViewCategories
-            .rx
-            .items(cellIdentifier: CategoryCollectionViewCell.className, cellType: CategoryCollectionViewCell.self)) {
-                _, element, cell in
-                cell.bindData(element)
-        }.disposed(by: self.disposeBag)
+        bindProperties()
+     
+    }
+    
+    func bindProperties() {
+        bindCollectionView()
+        bindSearch()
+    }
+    
+    func bindSearch() {
+//        self.inputSearch.drive(<#T##relay: BehaviorRelay<String>##BehaviorRelay<String>#>)
+    }
+    
+    func bindCollectionView() {
+        self.viewModel
+         .onCategories
+         .drive(collectionViewCategories
+         .rx
+         .items(cellIdentifier: CategoryCollectionViewCell.className, cellType: CategoryCollectionViewCell.self)) {
+             _, element, cell in
+             cell.bindData(element)
+         }.disposed(by: self.disposeBag)
+             
+         self.collectionViewCategories
+         .rx
+         .modelSelected(String.self)
+         .subscribe(onNext: { (category) in
+            self.outSearchPublish.onNext(category)
+         }).disposed(by: disposeBag)
     }
     
     func setupProperties() {
@@ -49,7 +83,7 @@ class SearchViewController: BaseViewController {
         self.collectionViewCategories.delegate = self
 
         self.view.addSubview(collectionViewCategories)
-        
+        self.view.addSubview(self.titleCategories)
         constrain(view, self.collectionViewCategories) { (view, collection) in
             collection.trailing == view.safeAreaLayoutGuide.trailing
             collection.leading == view.safeAreaLayoutGuide.leading
@@ -57,11 +91,17 @@ class SearchViewController: BaseViewController {
             collection.bottom == view.bottom
         }
         
+        constrain(self.titleCategories, self.collectionViewCategories) { (title, collection) in
+            title.bottom == collection.top
+            title.height == 25
+            title.width == 150
+            title.left == collection.left + 10
+        }
     }
 
 }
 
-extension SearchViewController : UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension FactHeaderViewController : UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {

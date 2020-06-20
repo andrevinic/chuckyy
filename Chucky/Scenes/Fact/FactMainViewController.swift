@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Cartography
 
-class FactViewController: BaseViewController {
+class FactMainViewController: BaseViewController {
 
     @IBOutlet weak var containerSearchHeader: UIView? {
         didSet {
@@ -24,7 +24,8 @@ class FactViewController: BaseViewController {
 
         }
     }
-    lazy var searchViewController = SearchViewController(viewModel: self.viewModel)
+    
+    lazy var headerViewController = FactHeaderViewController(viewModel: self.viewModel)
     
     @IBOutlet weak var categoriesCollectionView: UICollectionView? {
         didSet {
@@ -37,14 +38,6 @@ class FactViewController: BaseViewController {
             tableView?.isHidden = true
         }
     }
-//
-//    private let collectionView: UICollectionView = {
-//        let viewLayout = UICollectionViewFlowLayout()
-//        viewLayout.scrollDirection = .vertical
-//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
-//        collectionView.backgroundColor = .darkGray
-//        return collectionView
-//    }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         if #available(iOS 13.0, *) {
@@ -73,10 +66,7 @@ class FactViewController: BaseViewController {
     }
     
     private func setup() {
-//        self.setupCollectionView()
-        self.setupTableView()
         self.setupSearchView()
-//        self.bindStyles()
         self.fetchCategories()
     }
     private func fetchCategories() {
@@ -85,13 +75,7 @@ class FactViewController: BaseViewController {
     
     @available(iOS 11.0, *)
     private func setupSearchView() {
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.placeholder = "busque o que desejar"
-//        searchController.searchBar.delegate = self
-//        navigationItem.searchController = searchController
-//        definesPresentationContext = true
-//        self.navigationController?.navigationBar.backgroundColor = .darkGray
-//        self.searchController.searchBar.backgroundColor = .darkGray
+
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Pesquisar"
         searchController.searchBar.delegate = self
@@ -100,33 +84,27 @@ class FactViewController: BaseViewController {
         definesPresentationContext = true
         
         guard let containerHeader = self.containerSearchHeader else { return }
-        containerHeader.addSubview(self.searchViewController.view)
+        containerHeader.addSubview(self.headerViewController.view)
 
-        constrain(self.searchViewController.view, containerHeader) { (view, container) in
+        constrain(self.headerViewController.view, containerHeader) { (view, container) in
             view.height == container.height
             view.width == container.width
             view.leading == container.leading
             view.trailing == container.trailing
         
         }
-        
+       
+        self.headerViewController
+        .outSearch
+        .asObservable()
+        .subscribe(onNext: { (text) in
+            self.searchController.searchBar.text = text
+            self.searchBarTextDidEndEditing(self.searchController.searchBar)
+
+        }).disposed(by: disposeBag)
+
     }
     
-    private func setupTableView() {
-        guard let tableView = self.tableView else { return }
-
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(cellType: CategoriesTableViewCell.self)
-        self.view.addSubview(tableView)
-
-        self.viewModel
-            .onCategories
-            .drive(onNext: { _ in
-                tableView.reloadData()
-            }).disposed(by: disposeBag)
-        
-    }
 
     private func fact(indexPath: IndexPath) -> Fact? {
         if self.viewModel.facts.isEmpty {
@@ -150,7 +128,7 @@ class FactViewController: BaseViewController {
     }
 }
 
-extension FactViewController: UICollectionViewDelegate {
+extension FactMainViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
@@ -160,7 +138,7 @@ extension FactViewController: UICollectionViewDelegate {
     }
 }
 
-extension FactViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension FactMainViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.viewModel.facts.count
@@ -177,35 +155,8 @@ extension FactViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
 }
 
-extension FactViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.categories().count
 
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(with: CategoriesTableViewCell.self, for: indexPath)
-        cell.set(with: self.category(indexPath: indexPath))
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tableView?.deselectRow(at: indexPath, animated: true)
-        let category = self.category(indexPath: indexPath)
-        self.searchController.searchBar.text = category
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        self.searchController.searchBar.text = ""
-    }
-    
-    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-        self.searchController.searchBar.text = ""
-    }
-    
-}
-
-extension FactViewController: UISearchBarDelegate {
+extension FactMainViewController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
 //        hideTableView()

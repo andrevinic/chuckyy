@@ -11,7 +11,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FactMainViewController" customModule="Chucky" customModuleProvider="target">
             <connections>
                 <outlet property="containerSearchHeader" destination="tRp-LS-RIL" id="Aiq-Z7-NA6"/>
-                <outlet property="tableView" destination="Zhj-e1-Mvx" id="vb2-mE-bCV"/>
                 <outlet property="view" destination="iN0-l3-epB" id="QKg-R1-532"/>
             </connections>
         </placeholder>
@@ -20,12 +19,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zhj-e1-Mvx">
-                    <rect key="frame" x="0.0" y="194" width="414" height="702"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRp-LS-RIL">
-                    <rect key="frame" x="20" y="44" width="374" height="150"/>
+                    <rect key="frame" x="20" y="74" width="374" height="150"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="150" id="jxP-0m-9nm"/>
@@ -34,13 +29,9 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="tRp-LS-RIL" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="5y2-q8-VHT"/>
-                <constraint firstItem="Zhj-e1-Mvx" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="8cd-tM-U9g"/>
+                <constraint firstItem="tRp-LS-RIL" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="30" id="5y2-q8-VHT"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="tRp-LS-RIL" secondAttribute="trailing" constant="20" id="THR-VI-uI9"/>
-                <constraint firstItem="Zhj-e1-Mvx" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ahY-fu-fhQ"/>
-                <constraint firstItem="Zhj-e1-Mvx" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="kaD-FW-CCT"/>
                 <constraint firstItem="tRp-LS-RIL" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="tFJ-qE-ggd"/>
-                <constraint firstItem="Zhj-e1-Mvx" firstAttribute="top" secondItem="tRp-LS-RIL" secondAttribute="bottom" id="uPy-FG-IIX"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="102.45535714285714"/>
