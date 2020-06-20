@@ -22,6 +22,7 @@
 		F026061F249DC01C00B8E98C /* CategoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F026061D249DC01C00B8E98C /* CategoryCollectionViewCell.xib */; };
 		F0260621249DC35300B8E98C /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260620249DC35300B8E98C /* BaseCollectionViewCell.swift */; };
 		F0260623249E39F100B8E98C /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260622249E39F100B8E98C /* UIView+Extension.swift */; };
+		F0260625249ED61300B8E98C /* CustomSearchControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260624249ED61300B8E98C /* CustomSearchControllerViewController.swift */; };
 		F051D50C249AC99D00E740E8 /* FactMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F051D50B249AC99D00E740E8 /* FactMainViewController.xib */; };
 		F09CABD124984BD10028229C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CABD024984BD10028229C /* AppDelegate.swift */; };
 		F09CABD824984BD10028229C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F09CABD624984BD10028229C /* Main.storyboard */; };
@@ -56,8 +57,6 @@
 		F0D8A87C249C5CC60073B024 /* UserDefaultFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8A87B249C5CC60073B024 /* UserDefaultFacade.swift */; };
 		F0D8A87E249CE2130073B024 /* Observable+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8A87D249CE2130073B024 /* Observable+Util.swift */; };
 		F0E751192499B45C0015A919 /* TableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E751182499B45C0015A919 /* TableView+Extension.swift */; };
-		F0E7511C2499B4830015A919 /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E7511A2499B4830015A919 /* CategoriesTableViewCell.swift */; };
-		F0E7511D2499B4830015A919 /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0E7511B2499B4830015A919 /* CategoriesTableViewCell.xib */; };
 		F3E069759C4DB1BB6BCC3DC2 /* Pods_Chucky_ChuckyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFAC5DBA4FE7EAC7AC9E158F /* Pods_Chucky_ChuckyUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +99,7 @@
 		F026061D249DC01C00B8E98C /* CategoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		F0260620249DC35300B8E98C /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		F0260622249E39F100B8E98C /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		F0260624249ED61300B8E98C /* CustomSearchControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchControllerViewController.swift; sourceTree = "<group>"; };
 		F051D50B249AC99D00E740E8 /* FactMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FactMainViewController.xib; sourceTree = "<group>"; };
 		F09CABCD24984BD10028229C /* Chucky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chucky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09CABD024984BD10028229C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -140,8 +140,6 @@
 		F0D8A87B249C5CC60073B024 /* UserDefaultFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultFacade.swift; sourceTree = "<group>"; };
 		F0D8A87D249CE2130073B024 /* Observable+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Util.swift"; sourceTree = "<group>"; };
 		F0E751182499B45C0015A919 /* TableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableView+Extension.swift"; sourceTree = "<group>"; };
-		F0E7511A2499B4830015A919 /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
-		F0E7511B2499B4830015A919 /* CategoriesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoriesTableViewCell.xib; sourceTree = "<group>"; };
 		FB4D99BA78FE6B58E9427B1D /* Pods_Chucky.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chucky.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -255,14 +253,23 @@
 			path = Fact;
 			sourceTree = "<group>";
 		};
-		F0260619249DBE9300B8E98C /* Search */ = {
+		F0260626249ED66700B8E98C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F026061A249DBEB600B8E98C /* FactHeaderViewController.swift */,
 				F026061C249DC01C00B8E98C /* CategoryCollectionViewCell.swift */,
 				F026061D249DC01C00B8E98C /* CategoryCollectionViewCell.xib */,
 			);
-			path = Search;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F0260627249ED6EE00B8E98C /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				F0260626249ED66700B8E98C /* Views */,
+				F0260624249ED61300B8E98C /* CustomSearchControllerViewController.swift */,
+				F026061A249DBEB600B8E98C /* FactHeaderViewController.swift */,
+			);
+			path = Header;
 			sourceTree = "<group>";
 		};
 		F09CABC424984BD10028229C = {
@@ -407,6 +414,7 @@
 		F09CAC1F249860430028229C /* Fact */ = {
 			isa = PBXGroup;
 			children = (
+				F0260627249ED6EE00B8E98C /* Header */,
 				F09CAC3624986ECF0028229C /* Cell */,
 				F09CAC20249860580028229C /* FactMainViewController.swift */,
 				F051D50B249AC99D00E740E8 /* FactMainViewController.xib */,
@@ -418,11 +426,8 @@
 		F09CAC3624986ECF0028229C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				F0260619249DBE9300B8E98C /* Search */,
 				F09CAC39249872FB0028229C /* FactCollectionViewCell.swift */,
 				F09CAC3A249872FB0028229C /* FactCollectionViewCell.xib */,
-				F0E7511A2499B4830015A919 /* CategoriesTableViewCell.swift */,
-				F0E7511B2499B4830015A919 /* CategoriesTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -549,7 +554,6 @@
 				F09CAC3C249872FB0028229C /* FactCollectionViewCell.xib in Resources */,
 				F0260606249DAB6D00B8E98C /* search_query_chuck_success.json in Resources */,
 				F09CABDD24984BD20028229C /* LaunchScreen.storyboard in Resources */,
-				F0E7511D2499B4830015A919 /* CategoriesTableViewCell.xib in Resources */,
 				F0260608249DAB9900B8E98C /* search_query_empty.json in Resources */,
 				F026061F249DC01C00B8E98C /* CategoryCollectionViewCell.xib in Resources */,
 				F09CABDA24984BD20028229C /* Assets.xcassets in Resources */,
@@ -711,7 +715,6 @@
 				F0D8A87C249C5CC60073B024 /* UserDefaultFacade.swift in Sources */,
 				F09CAC31249869910028229C /* UIViewController+Extension.swift in Sources */,
 				F09CAC2B249860FA0028229C /* CustomLoadingView.swift in Sources */,
-				F0E7511C2499B4830015A919 /* CategoriesTableViewCell.swift in Sources */,
 				F09CAC2D249864F50028229C /* FactViewModel.swift in Sources */,
 				F09CAC0F24985AC60028229C /* FactService.swift in Sources */,
 				F09CAC23249860740028229C /* BaseViewController.swift in Sources */,
@@ -726,6 +729,7 @@
 				F0D8A87E249CE2130073B024 /* Observable+Util.swift in Sources */,
 				F0260621249DC35300B8E98C /* BaseCollectionViewCell.swift in Sources */,
 				F09CAC1424985BB90028229C /* String+Extension.swift in Sources */,
+				F0260625249ED61300B8E98C /* CustomSearchControllerViewController.swift in Sources */,
 				F0E751192499B45C0015A919 /* TableView+Extension.swift in Sources */,
 				F09CAC1E24985EF30028229C /* AppCoordinator.swift in Sources */,
 				F09CAC29249860C60028229C /* Reachability.swift in Sources */,

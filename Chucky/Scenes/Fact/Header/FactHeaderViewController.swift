@@ -13,6 +13,7 @@ import Cartography
 
 class FactHeaderViewController: BaseViewController {
 
+    
     private let outSearchPublish = PublishSubject<String>()
     var outSearch: Driver<String> {
         return self.outSearchPublish.asDriver(onErrorJustReturn: "")
@@ -53,11 +54,6 @@ class FactHeaderViewController: BaseViewController {
     
     func bindProperties() {
         bindCollectionView()
-        bindSearch()
-    }
-    
-    func bindSearch() {
-//        self.inputSearch.drive(<#T##relay: BehaviorRelay<String>##BehaviorRelay<String>#>)
     }
     
     func bindCollectionView() {
@@ -110,10 +106,7 @@ extension FactHeaderViewController : UICollectionViewDelegate, UICollectionViewD
             cell.alpha = 1.0
         }, completion: nil)
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//         return CGSize(width: 100, height: 100)
-//     }
-//
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }

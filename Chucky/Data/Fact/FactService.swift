@@ -18,20 +18,20 @@ protocol FactServiceContract {
 class FactService: FactServiceContract {
     
     private let provider = ApiProvider<FactAPI>()
-
+    
     func search(with query: String) -> Single<[Fact]> {
         return self.provider
-        .rx
-        .request(.search(query: query))
-        .mapDefault(SearchResponse.self)
-        .map { $0.result }
+            .rx
+            .request(.search(query: query))
+            .mapDefault(SearchResponse.self)
+            .map { $0.result }
     }
     
     func categories() -> Single<[String]> {
         return self.provider
-        .rx
-        .request(.categories)
-        .map([String].self)
+            .rx
+            .request(.categories)
+            .map([String].self)
     }
     
 }

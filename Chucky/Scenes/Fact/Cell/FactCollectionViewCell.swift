@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Cartography
 
-class FactCollectionViewCell: UICollectionViewCell {
+class FactCollectionViewCell: BaseCollectionViewCell {
     
     @IBOutlet weak var contentFeedView: UIView? { didSet {
             contentFeedView?.backgroundColor = .black
@@ -31,10 +31,11 @@ class FactCollectionViewCell: UICollectionViewCell {
         self.setup()
     }
     
-    func set(with item: Fact) {
-        title.text = item.value
+    override func bindData<T>(_ data: T...) {
+        guard let fact = data[0] as? Fact else { return }
+        self.title.text = fact.value
     }
-    
+
     private func setup() {
         self.backgroundColor = .black
         self.contentFeedView?.addSubview(title)

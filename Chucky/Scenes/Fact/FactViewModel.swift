@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class FactViewModel: BaseViewModel {
-
+    
     private let factService: FactServiceContract
     internal var facts: [Fact] = []
     internal var categoriesList: [String] = []
@@ -21,9 +21,9 @@ class FactViewModel: BaseViewModel {
         return self._onCategories.asDriver(onErrorJustReturn: [])
     }
     
-    private let _onFetched = PublishSubject<()>()
-    var onFetched: Driver<()> {
-        return self._onFetched.asDriver(onErrorJustReturn: ())
+    private let _onFetched = PublishSubject<[Fact]>()
+    var onFetched: Driver<[Fact]> {
+        return self._onFetched.asDriver(onErrorJustReturn: [])
     }
     
     private var query: String = ""
@@ -40,7 +40,7 @@ class FactViewModel: BaseViewModel {
                 self.categoriesList.append(contentsOf: response)
                 self._onCategories.onNext(response)
             }, onError: self.handleError(error:))
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func fetch(with query: String) {
@@ -54,14 +54,14 @@ class FactViewModel: BaseViewModel {
             .defaultLoading(super.isLoading)
             .subscribe(onSuccess: { (response) in
                 self.facts.append(contentsOf: response)
-                self._onFetched.onNext(())
+                self._onFetched.onNext(response)
             }, onError: self.handleError(error:))
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func clearData() {
         self.query = ""
         self.facts.removeAll()
-        self._onFetched.onNext(())
+        self._onFetched.onNext([])
     }
 }

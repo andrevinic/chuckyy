@@ -12,18 +12,22 @@ import RxCocoa
 import Cartography
 
 class FactMainViewController: BaseViewController {
-
+    
     @IBOutlet weak var containerSearchHeader: UIView? {
         didSet {
             containerSearchHeader?.backgroundColor = .clear
         }
     }
-    private var searchController = UISearchController(searchResultsController: nil) {
-        didSet {
-            self.searchController.searchBar.showsCancelButton = false;
-
-        }
-    }
+    
+    private var searchController = CustomSearchControllerViewController()
+    
+    private let collectionView: UICollectionView = {
+        let viewLayout = UICollectionViewFlowLayout()
+        viewLayout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
+        collectionView.backgroundColor = .darkGray
+        return collectionView
+    }()
     
     lazy var headerViewController = FactHeaderViewController(viewModel: self.viewModel)
     
@@ -66,51 +70,87 @@ class FactMainViewController: BaseViewController {
     }
     
     private func setup() {
+        self.setupCollectionView()
+        self.setupSearchBinds()
         self.setupSearchView()
         self.fetchCategories()
     }
+    
     private func fetchCategories() {
         self.viewModel.categories()
     }
     
     @available(iOS 11.0, *)
     private func setupSearchView() {
-
+        
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Pesquisar"
-        searchController.searchBar.delegate = self
-        searchController.searchBar.accessibilityIdentifier = "repository-search"
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
         guard let containerHeader = self.containerSearchHeader else { return }
         containerHeader.addSubview(self.headerViewController.view)
-
+        
         constrain(self.headerViewController.view, containerHeader) { (view, container) in
             view.height == container.height
             view.width == container.width
             view.leading == container.leading
             view.trailing == container.trailing
-        
+            
         }
-       
-        self.headerViewController
-        .outSearch
-        .asObservable()
-        .subscribe(onNext: { (text) in
-            self.searchController.searchBar.text = text
-            self.searchBarTextDidEndEditing(self.searchController.searchBar)
-
-        }).disposed(by: disposeBag)
-
+        
     }
     
-
-    private func fact(indexPath: IndexPath) -> Fact? {
-        if self.viewModel.facts.isEmpty {
-            return nil
-        }
-        return self.viewModel.facts[indexPath.row]
+    private func setupCollectionView() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionView.delegate = self
+        self.collectionView.register(cellType: FactCollectionViewCell.self)
+        self.view.backgroundColor = .white
+        self.collectionView.alpha = 0.0
+        self.view.addSubview(self.collectionView)
+        
+        self.viewModel
+            .onFetched
+            .drive(self.collectionView
+                .rx
+                .items(cellIdentifier: FactCollectionViewCell.className, cellType: FactCollectionViewCell.self)) { _, element, cell in
+                    cell.bindData(element)
+                    
+        }.disposed(by: disposeBag)
+        
+    }
+    
+    private func setupSearchBinds() {
+        
+        let query = self.searchController
+            .searchBar
+            .rx
+            .text
+            .orEmpty
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .filter({!$0.isEmpty})
+            .asObservable()
+        
+        Observable.merge(
+            self.headerViewController
+                .outSearch
+                .asObservable(),
+            query)
+            .subscribe(onNext: { (query) in
+                self.searchController.searchBar.text = query
+                self.searchController.searchBar.becomeFirstResponder()
+                self.viewModel.clearData()
+                self.viewModel.fetch(with: query)
+            }).disposed(by: disposeBag)
+        
+        self.searchController
+            .searchBar
+            .rx
+            .cancelButtonClicked
+            .subscribe(onNext: { (_) in
+                print("test")
+            }).disposed(by: disposeBag)
     }
     
     private func category(indexPath: IndexPath) -> String {
@@ -120,69 +160,21 @@ class FactMainViewController: BaseViewController {
     private func categories() -> [String] {
         return self.viewModel.categoriesList
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.tableView?.layoutSubviews()
         self.tableView?.layoutIfNeeded()
     }
+    
 }
 
-extension FactMainViewController: UICollectionViewDelegate {
-
+extension FactMainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
         let height = width
-
-       return CGSize(width: width, height: height)
-    }
-}
-
-extension FactMainViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.viewModel.facts.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(with: FactCollectionViewCell.self, for: indexPath)
         
-        if let fact = self.fact(indexPath: indexPath) {
-            cell.set(with: fact)
-        }
-        return cell
+        return CGSize(width: width, height: height)
     }
-    
-}
-
-
-extension FactMainViewController: UISearchBarDelegate {
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        hideTableView()
-        self.viewModel.clearData()
-       
-        guard let text = searchBar.text, !text.isEmpty else {
-//            hideCollectionView()
-            return
-        }
-        
-        self.viewModel.fetch(with: text)
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-        if let text = searchBar.text, text.isEmpty {
-            return
-        }
-        
-        self.viewModel.clearData()
-//        hideCollectionView()
-        DispatchQueue.main.async {
-            self.tableView?.reloadData()
-            self.tableView?.layoutIfNeeded()
-            self.view.layoutIfNeeded()
-        }
-    }
-    
 }
