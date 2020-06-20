@@ -21,9 +21,9 @@ class BaseViewController: UIViewController {
     internal let hud = CustomLoadingView()
     private var banner: NotificationBanner?
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-          return .lightContent
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//          return .lightContent
+//    }
       
       public init() {
           super.init(nibName: nil, bundle: nil)

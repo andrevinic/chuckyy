@@ -11,24 +11,33 @@ import RxSwift
 import RxCocoa
 import Cartography
 
-class FactViewController: BaseViewController {
+class FactMainViewController: BaseViewController {
 
-    private let searchController = UISearchController(searchResultsController: nil)
-   
-    private let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero)
-        tableView.backgroundColor = .darkGray
-        return tableView
-    }()
+    @IBOutlet weak var containerSearchHeader: UIView? {
+        didSet {
+            containerSearchHeader?.backgroundColor = .clear
+        }
+    }
+    private var searchController = UISearchController(searchResultsController: nil) {
+        didSet {
+            self.searchController.searchBar.showsCancelButton = false;
+
+        }
+    }
+    lazy var searchViewController = FactHeaderViewController(viewModel: self.viewModel)
     
-    private let collectionView: UICollectionView = {
-        let viewLayout = UICollectionViewFlowLayout()
-        viewLayout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
-        collectionView.backgroundColor = .darkGray
-        return collectionView
-    }()
-    
+    @IBOutlet weak var categoriesCollectionView: UICollectionView? {
+        didSet {
+            categoriesCollectionView?.backgroundColor = .blue
+        }
+    }
+    @IBOutlet weak var tableView: UITableView? {
+        didSet {
+            tableView?.backgroundColor = .darkGray
+            tableView?.isHidden = true
+        }
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         if #available(iOS 13.0, *) {
             return .darkContent
@@ -56,11 +65,10 @@ class FactViewController: BaseViewController {
     }
     
     private func setup() {
-        self.setupCollectionView()
+//        self.setupCollectionView()
         self.setupTableView()
-
         self.setupSearchView()
-        self.bindStyles()
+//        self.bindStyles()
         self.fetchCategories()
     }
     private func fetchCategories() {
@@ -69,66 +77,48 @@ class FactViewController: BaseViewController {
     
     @available(iOS 11.0, *)
     private func setupSearchView() {
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "busque o que desejar"
+//        searchController.searchBar.delegate = self
+//        navigationItem.searchController = searchController
+//        definesPresentationContext = true
+//        self.navigationController?.navigationBar.backgroundColor = .darkGray
+//        self.searchController.searchBar.backgroundColor = .darkGray
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "busque o que desejar"
+        searchController.searchBar.placeholder = "Pesquisar"
         searchController.searchBar.delegate = self
+        searchController.searchBar.accessibilityIdentifier = "repository-search"
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        self.navigationController?.navigationBar.backgroundColor = .darkGray
-        self.searchController.searchBar.backgroundColor = .darkGray
         
-    }
-    private func setupCollectionView() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.collectionView.register(cellType: FactCollectionViewCell.self)
-        self.view.backgroundColor = .white
-        self.collectionView.alpha = 0.0
-        self.view.addSubview(self.collectionView)
-        
-        self.viewModel
-            .onFetched
-            .drive(onNext: { [unowned self] in
-                self.collectionView.reloadData()
-            }).disposed(by: disposeBag)
+        guard let containerHeader = self.containerSearchHeader else { return }
+        containerHeader.addSubview(self.searchViewController.view)
 
+        constrain(self.searchViewController.view, containerHeader) { (view, container) in
+            view.height == container.height
+            view.width == container.width
+            view.leading == container.leading
+            view.trailing == container.trailing
+        }
+        
     }
     
     private func setupTableView() {
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.tableView.register(cellType: CategoriesTableViewCell.self)
-        self.view.addSubview(self.tableView)
+        guard let tableView = self.tableView else { return }
+
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(cellType: CategoriesTableViewCell.self)
+        self.view.addSubview(tableView)
 
         self.viewModel
             .onCategories
             .drive(onNext: { _ in
-                self.tableView.reloadData()
+                tableView.reloadData()
             }).disposed(by: disposeBag)
         
     }
-    
-    @available(iOS 11.0, *)
-    private func bindStyles() {
-        
-        self.collectionView.tintColor = .blue
-        
-        constrain(view, collectionView) { (view, collectionView) in
-            collectionView.top == view.top
-            collectionView.bottom == view.safeAreaLayoutGuide.bottom
-            collectionView.left == view.safeAreaLayoutGuide.left
-            collectionView.right == view.safeAreaLayoutGuide.right
-        }
-        
-        constrain(view, tableView) { (view, tableView) in
-                   tableView.top == view.top
-                   tableView.bottom == view.safeAreaLayoutGuide.bottom
-                   tableView.left == view.safeAreaLayoutGuide.left
-                   tableView.right == view.safeAreaLayoutGuide.right
-               }
-    }
-    
+
     private func fact(indexPath: IndexPath) -> Fact? {
         if self.viewModel.facts.isEmpty {
             return nil
@@ -144,24 +134,14 @@ class FactViewController: BaseViewController {
         return self.viewModel.categoriesList
     }
 
-    private func hideCollectionView() {
-        self.collectionView.alpha = 0.0
-        self.tableView.alpha = 1.0
-    }
-    
-    private func hideTableView() {
-        self.collectionView.alpha = 1.0
-        self.tableView.alpha = 0.0
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.tableView.layoutSubviews()
-        self.tableView.layoutIfNeeded()
+        self.tableView?.layoutSubviews()
+        self.tableView?.layoutIfNeeded()
     }
 }
 
-extension FactViewController: UICollectionViewDelegate {
+extension FactMainViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
@@ -171,7 +151,7 @@ extension FactViewController: UICollectionViewDelegate {
     }
 }
 
-extension FactViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension FactMainViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.viewModel.facts.count
@@ -188,7 +168,7 @@ extension FactViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
 }
 
-extension FactViewController: UITableViewDelegate, UITableViewDataSource {
+extension FactMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.categories().count
 
@@ -201,6 +181,7 @@ extension FactViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView?.deselectRow(at: indexPath, animated: true)
         let category = self.category(indexPath: indexPath)
         self.searchController.searchBar.text = category
     }
@@ -211,32 +192,35 @@ extension FactViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         self.searchController.searchBar.text = ""
-
     }
     
 }
 
-extension FactViewController: UISearchBarDelegate {
+extension FactMainViewController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        hideTableView()
+//        hideTableView()
         self.viewModel.clearData()
+       
         guard let text = searchBar.text, !text.isEmpty else {
-            hideCollectionView()
+//            hideCollectionView()
             return
         }
+        
         self.viewModel.fetch(with: text)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
         if let text = searchBar.text, text.isEmpty {
             return
         }
+        
         self.viewModel.clearData()
-        hideCollectionView()
+//        hideCollectionView()
         DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.tableView.layoutIfNeeded()
+            self.tableView?.reloadData()
+            self.tableView?.layoutIfNeeded()
             self.view.layoutIfNeeded()
         }
     }

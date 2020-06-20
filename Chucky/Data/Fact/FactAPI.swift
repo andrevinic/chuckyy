@@ -43,9 +43,9 @@ extension FactAPI: TargetType {
     var sampleData: Data {
         switch self {
         case .search:
-            return Bundle.main.dataFromJsonFile(name: "mock_norris_response_success")
+            return Bundle.main.dataFromJsonFile(name: "search_query_chuck_success")
         case .categories:
-            return Bundle.main.dataFromJsonFile(name: "mock_norris_response_success")
+            return Bundle.main.dataFromJsonFile(name: "categories")
 
         }
     }
