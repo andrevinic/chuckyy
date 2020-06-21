@@ -25,6 +25,7 @@ class FactService: FactServiceContract {
             .request(.search(query: query))
             .mapDefault(SearchResponse.self)
             .map { $0.result }
+            
     }
     
     func categories() -> Single<[String]> {

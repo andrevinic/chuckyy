@@ -54,6 +54,15 @@
 		F09CAC35249869ED0028229C /* Global+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CAC34249869ED0028229C /* Global+Extensions.swift */; };
 		F09CAC3B249872FB0028229C /* FactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09CAC39249872FB0028229C /* FactCollectionViewCell.swift */; };
 		F09CAC3C249872FB0028229C /* FactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F09CAC3A249872FB0028229C /* FactCollectionViewCell.xib */; };
+		F0A94736249EEEA00064671E /* RecentSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A94734249EEEA00064671E /* RecentSearchCollectionViewCell.swift */; };
+		F0A94737249EEEA00064671E /* RecentSearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0A94735249EEEA00064671E /* RecentSearchCollectionViewCell.xib */; };
+		F0A94739249F03D80064671E /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A94738249F03D80064671E /* UIImageView+Extension.swift */; };
+		F0A94741249F073D0064671E /* AirbnbCerealExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A9473B249F073D0064671E /* AirbnbCerealExtraBold.ttf */; };
+		F0A94742249F073D0064671E /* AirbnbCerealBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A9473C249F073D0064671E /* AirbnbCerealBold.ttf */; };
+		F0A94743249F073D0064671E /* AirbnbCerealBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A9473D249F073D0064671E /* AirbnbCerealBlack.ttf */; };
+		F0A94744249F073D0064671E /* AirbnbCerealMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A9473E249F073D0064671E /* AirbnbCerealMedium.ttf */; };
+		F0A94745249F073D0064671E /* AirbnbCerealBook.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A9473F249F073D0064671E /* AirbnbCerealBook.ttf */; };
+		F0A94746249F073D0064671E /* AirbnbCerealLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A94740249F073D0064671E /* AirbnbCerealLight.ttf */; };
 		F0D8A87C249C5CC60073B024 /* UserDefaultFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8A87B249C5CC60073B024 /* UserDefaultFacade.swift */; };
 		F0D8A87E249CE2130073B024 /* Observable+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8A87D249CE2130073B024 /* Observable+Util.swift */; };
 		F0E751192499B45C0015A919 /* TableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E751182499B45C0015A919 /* TableView+Extension.swift */; };
@@ -137,6 +146,15 @@
 		F09CAC34249869ED0028229C /* Global+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global+Extensions.swift"; sourceTree = "<group>"; };
 		F09CAC39249872FB0028229C /* FactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCollectionViewCell.swift; sourceTree = "<group>"; };
 		F09CAC3A249872FB0028229C /* FactCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FactCollectionViewCell.xib; sourceTree = "<group>"; };
+		F0A94734249EEEA00064671E /* RecentSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		F0A94735249EEEA00064671E /* RecentSearchCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentSearchCollectionViewCell.xib; sourceTree = "<group>"; };
+		F0A94738249F03D80064671E /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		F0A9473B249F073D0064671E /* AirbnbCerealExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealExtraBold.ttf; sourceTree = "<group>"; };
+		F0A9473C249F073D0064671E /* AirbnbCerealBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealBold.ttf; sourceTree = "<group>"; };
+		F0A9473D249F073D0064671E /* AirbnbCerealBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealBlack.ttf; sourceTree = "<group>"; };
+		F0A9473E249F073D0064671E /* AirbnbCerealMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealMedium.ttf; sourceTree = "<group>"; };
+		F0A9473F249F073D0064671E /* AirbnbCerealBook.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealBook.ttf; sourceTree = "<group>"; };
+		F0A94740249F073D0064671E /* AirbnbCerealLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealLight.ttf; sourceTree = "<group>"; };
 		F0D8A87B249C5CC60073B024 /* UserDefaultFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultFacade.swift; sourceTree = "<group>"; };
 		F0D8A87D249CE2130073B024 /* Observable+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Util.swift"; sourceTree = "<group>"; };
 		F0E751182499B45C0015A919 /* TableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableView+Extension.swift"; sourceTree = "<group>"; };
@@ -258,6 +276,8 @@
 			children = (
 				F026061C249DC01C00B8E98C /* CategoryCollectionViewCell.swift */,
 				F026061D249DC01C00B8E98C /* CategoryCollectionViewCell.xib */,
+				F0A94734249EEEA00064671E /* RecentSearchCollectionViewCell.swift */,
+				F0A94735249EEEA00064671E /* RecentSearchCollectionViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -366,6 +386,7 @@
 		F09CAC0324984F0D0028229C /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				F0A9473A249F072D0064671E /* Resources */,
 				F0260602249DAB1800B8E98C /* Mocks */,
 				F09CAC1224985BA00028229C /* Extensions */,
 				F09CABD024984BD10028229C /* AppDelegate.swift */,
@@ -407,6 +428,7 @@
 				F0E751182499B45C0015A919 /* TableView+Extension.swift */,
 				F0D8A87D249CE2130073B024 /* Observable+Util.swift */,
 				F0260622249E39F100B8E98C /* UIView+Extension.swift */,
+				F0A94738249F03D80064671E /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -430,6 +452,19 @@
 				F09CAC3A249872FB0028229C /* FactCollectionViewCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		F0A9473A249F072D0064671E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F0A9473D249F073D0064671E /* AirbnbCerealBlack.ttf */,
+				F0A9473C249F073D0064671E /* AirbnbCerealBold.ttf */,
+				F0A9473F249F073D0064671E /* AirbnbCerealBook.ttf */,
+				F0A9473B249F073D0064671E /* AirbnbCerealExtraBold.ttf */,
+				F0A94740249F073D0064671E /* AirbnbCerealLight.ttf */,
+				F0A9473E249F073D0064671E /* AirbnbCerealMedium.ttf */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		F0D8A87A249C5CAE0073B024 /* UserDefault */ = {
@@ -553,11 +588,18 @@
 				F0260604249DAB3B00B8E98C /* categories.json in Resources */,
 				F09CAC3C249872FB0028229C /* FactCollectionViewCell.xib in Resources */,
 				F0260606249DAB6D00B8E98C /* search_query_chuck_success.json in Resources */,
+				F0A94746249F073D0064671E /* AirbnbCerealLight.ttf in Resources */,
+				F0A94745249F073D0064671E /* AirbnbCerealBook.ttf in Resources */,
+				F0A94742249F073D0064671E /* AirbnbCerealBold.ttf in Resources */,
 				F09CABDD24984BD20028229C /* LaunchScreen.storyboard in Resources */,
 				F0260608249DAB9900B8E98C /* search_query_empty.json in Resources */,
 				F026061F249DC01C00B8E98C /* CategoryCollectionViewCell.xib in Resources */,
+				F0A94741249F073D0064671E /* AirbnbCerealExtraBold.ttf in Resources */,
 				F09CABDA24984BD20028229C /* Assets.xcassets in Resources */,
+				F0A94737249EEEA00064671E /* RecentSearchCollectionViewCell.xib in Resources */,
 				F051D50C249AC99D00E740E8 /* FactMainViewController.xib in Resources */,
+				F0A94744249F073D0064671E /* AirbnbCerealMedium.ttf in Resources */,
+				F0A94743249F073D0064671E /* AirbnbCerealBlack.ttf in Resources */,
 				F09CABD824984BD10028229C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -715,6 +757,7 @@
 				F0D8A87C249C5CC60073B024 /* UserDefaultFacade.swift in Sources */,
 				F09CAC31249869910028229C /* UIViewController+Extension.swift in Sources */,
 				F09CAC2B249860FA0028229C /* CustomLoadingView.swift in Sources */,
+				F0A94736249EEEA00064671E /* RecentSearchCollectionViewCell.swift in Sources */,
 				F09CAC2D249864F50028229C /* FactViewModel.swift in Sources */,
 				F09CAC0F24985AC60028229C /* FactService.swift in Sources */,
 				F09CAC23249860740028229C /* BaseViewController.swift in Sources */,
@@ -734,6 +777,7 @@
 				F09CAC1E24985EF30028229C /* AppCoordinator.swift in Sources */,
 				F09CAC29249860C60028229C /* Reachability.swift in Sources */,
 				F09CAC1C24985E4C0028229C /* Single+Extension.swift in Sources */,
+				F0A94739249F03D80064671E /* UIImageView+Extension.swift in Sources */,
 				F026061B249DBEB700B8E98C /* FactHeaderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,9 +13,8 @@ import RxCocoa
 class FactViewModel: BaseViewModel {
     
     private let factService: FactServiceContract
-    internal var facts: [Fact] = []
-    internal var categoriesList: [String] = []
-    
+    private var facts: [Fact] = []
+    private var categoriesList: [String] = []
     private let _onCategories = PublishSubject<[String]>()
     var onCategories: Driver<[String]> {
         return self._onCategories.asDriver(onErrorJustReturn: [])
@@ -27,9 +26,13 @@ class FactViewModel: BaseViewModel {
     }
     
     private var query: String = ""
+    private var localQuery: UserDefaultFacade
+    var recentSearch: Driver<[String]>
     
-    init(factService: FactServiceContract) {
+    init(factService: FactServiceContract, localQuery: UserDefaultFacade) {
         self.factService = factService
+        self.localQuery = localQuery
+        self.recentSearch = localQuery.lastSearch.asDriver(onErrorJustReturn: [])
     }
     
     func categories() {
@@ -48,7 +51,8 @@ class FactViewModel: BaseViewModel {
         guard !self.query.isEmpty else {
             return
         }
-        
+        self.localQuery.addSearch(query)
+
         self.factService
             .search(with: self.query)
             .defaultLoading(super.isLoading)

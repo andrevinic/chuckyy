@@ -13,7 +13,6 @@ import Cartography
 
 class FactHeaderViewController: BaseViewController {
 
-    
     private let outSearchPublish = PublishSubject<String>()
     var outSearch: Driver<String> {
         return self.outSearchPublish.asDriver(onErrorJustReturn: "")
@@ -26,8 +25,23 @@ class FactHeaderViewController: BaseViewController {
         title.font = UIFont(name: "System Light", size: 19)
         return title
     }()
+    private let titleRecentSearches: UILabel = {
+    
+        let title = UILabel()
+        title.text = "Buscas recentes"
+        title.font = UIFont(name: "System Light", size: 19)
+        return title
+    }()
     
     private let collectionViewCategories: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.backgroundColor = UIColor.clear
+        return collectionView
+    }()
+    
+    private let collectionViewRecentSearches: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -54,6 +68,14 @@ class FactHeaderViewController: BaseViewController {
     
     func bindProperties() {
         bindCollectionView()
+        
+        viewModel
+            .recentSearch
+            .drive(collectionViewRecentSearches.rx
+                .items(cellIdentifier: RecentSearchCollectionViewCell.className, cellType: RecentSearchCollectionViewCell.self)) {
+                    _, element, cell in
+                    cell.bindData(element)
+        }.disposed(by: self.disposeBag)
     }
     
     func bindCollectionView() {
@@ -72,27 +94,58 @@ class FactHeaderViewController: BaseViewController {
          .subscribe(onNext: { (category) in
             self.outSearchPublish.onNext(category)
          }).disposed(by: disposeBag)
+        
+        
     }
     
     func setupProperties() {
+        self.collectionViewRecentSearches.register(cellType: RecentSearchCollectionViewCell.self)
         self.collectionViewCategories.register(cellType: CategoryCollectionViewCell.self)
         self.collectionViewCategories.delegate = self
-
+        self.collectionViewRecentSearches.delegate = self
+        self.view.addSubview(titleCategories)
         self.view.addSubview(collectionViewCategories)
-        self.view.addSubview(self.titleCategories)
-        constrain(view, self.collectionViewCategories) { (view, collection) in
-            collection.trailing == view.safeAreaLayoutGuide.trailing
-            collection.leading == view.safeAreaLayoutGuide.leading
-            collection.top == view.top
-            collection.bottom == view.bottom
+        
+        self.view.addSubview(titleRecentSearches)
+        self.view.addSubview(collectionViewRecentSearches)
+        
+        constrain(view,
+                  titleCategories,
+                  collectionViewCategories,
+                  titleRecentSearches,
+                  collectionViewRecentSearches) { (
+            
+                    view,
+                    titleCategories,
+                    collectionViewCategories,
+                    titleRecentSearches,
+                    collectionViewRecentSearches) in
+                    
+                    titleCategories.height == 25
+                    titleCategories.left == collectionViewCategories.left + 10
+                    titleCategories.top == view.top
+                    titleCategories.bottom == collectionViewCategories.top
+                    titleCategories.trailing == view.safeAreaLayoutGuide.trailing
+                    
+                    collectionViewCategories.trailing == view.safeAreaLayoutGuide.trailing
+                    collectionViewCategories.leading == view.safeAreaLayoutGuide.leading
+                    collectionViewCategories.bottom == titleRecentSearches.top
+                    collectionViewCategories.height == 150
+                    collectionViewCategories.centerX == view.centerX
+                    titleRecentSearches.trailing == view.safeAreaLayoutGuide.trailing
+                    titleRecentSearches.height == 25
+                    titleRecentSearches.left == collectionViewRecentSearches.left + 10
+                    
+                    collectionViewRecentSearches.trailing == view.safeAreaLayoutGuide.trailing
+                    collectionViewRecentSearches.leading == view.safeAreaLayoutGuide.leading
+                    collectionViewRecentSearches.height >= 100
+                    collectionViewRecentSearches.top == titleRecentSearches.bottom
+                    collectionViewRecentSearches.bottom == view.bottom
+                    
+                    collectionViewRecentSearches.centerX == view.centerX
+                    
         }
         
-        constrain(self.titleCategories, self.collectionViewCategories) { (title, collection) in
-            title.bottom == collection.top
-            title.height == 25
-            title.width == 150
-            title.left == collection.left + 10
-        }
     }
 
 }

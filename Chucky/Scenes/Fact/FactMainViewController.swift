@@ -123,8 +123,8 @@ class FactMainViewController: BaseViewController {
             .text
             .orEmpty
             .filter({$0.isEmpty})
-            .subscribe(onNext: { [weak self] (_) in
-                self?.hideCollectionView()
+            .subscribe(onNext: { [unowned self] (_) in
+                self.hideCollectionView()
             }).disposed(by: disposeBag)
     }
     

@@ -24,7 +24,7 @@ protocol UserDefaultFacadeContract {
 
 class UserDefaultFacade: UserDefaultFacadeContract {
     
-    
+    private let limitToSave = 100
     var firstAccess: Bool {
            get {
             return userDefaults.bool(forKey: SearchKeys.first.rawValue)
@@ -61,7 +61,7 @@ class UserDefaultFacade: UserDefaultFacadeContract {
            }
            
            //if array is not full, always insert item at position 0
-           if current.count < 6 {
+           if current.count < limitToSave {
                newArray.insert(string, at: 0)
                return newArray
            } else {

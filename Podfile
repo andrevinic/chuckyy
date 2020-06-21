@@ -11,6 +11,7 @@ target 'Chucky' do
   pod 'Moya/RxSwift', '~> 14.0'
   pod 'Cartography', '~> 3.0'
   pod 'NotificationBannerSwift', '2.0.1'
+  pod 'Kingfisher', '~> 5.0'
 
   target 'ChuckyTests' do
     inherit! :search_paths

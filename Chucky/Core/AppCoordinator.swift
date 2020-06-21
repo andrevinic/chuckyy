@@ -24,7 +24,7 @@ class AppCoordinator {
     
     private func navigateToHome() {
         let factService = FactService()
-        let factViewModel = FactViewModel(factService: factService)
+        let factViewModel = FactViewModel(factService: factService, localQuery: UserDefaultFacade())
         let factViewController = FactMainViewController(viewModel: factViewModel)
         let navigationController = UINavigationController(rootViewController: factViewController)
         if #available(iOS 11.0, *) {

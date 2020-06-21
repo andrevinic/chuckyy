@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +18,22 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ayI-P4-XfH">
                         <rect key="frame" x="0.0" y="0.0" width="222" height="125"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FdF-DC-Amx">
+                                <rect key="frame" x="20" y="84" width="100" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="ef5-zA-ze2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="FdF-DC-Amx" firstAttribute="leading" secondItem="ayI-P4-XfH" secondAttribute="leading" constant="20" id="RLu-r5-0T9"/>
+                            <constraint firstAttribute="bottom" secondItem="FdF-DC-Amx" secondAttribute="bottom" constant="20" id="hPR-AP-pxA"/>
+                        </constraints>
                     </view>
                 </subviews>
             </view>
@@ -29,6 +45,7 @@
             </constraints>
             <size key="customSize" width="222" height="125"/>
             <connections>
+                <outlet property="categoriesText" destination="FdF-DC-Amx" id="z6z-38-FFN"/>
                 <outlet property="contentFeedView" destination="ayI-P4-XfH" id="YvC-LO-DGU"/>
             </connections>
             <point key="canvasLocation" x="265.21739130434787" y="68.638392857142847"/>
