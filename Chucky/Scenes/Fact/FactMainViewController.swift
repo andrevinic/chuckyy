@@ -20,6 +20,7 @@ class FactMainViewController: BaseViewController {
     }
     
     private var searchController = CustomSearchControllerViewController()
+    lazy var headerViewController = FactHeaderViewController(viewModel: self.viewModel)
     
     private let collectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
@@ -29,17 +30,9 @@ class FactMainViewController: BaseViewController {
         return collectionView
     }()
     
-    lazy var headerViewController = FactHeaderViewController(viewModel: self.viewModel)
-    
     @IBOutlet weak var categoriesCollectionView: UICollectionView? {
         didSet {
             categoriesCollectionView?.backgroundColor = .blue
-        }
-    }
-    @IBOutlet weak var tableView: UITableView? {
-        didSet {
-            tableView?.backgroundColor = .darkGray
-            tableView?.isHidden = true
         }
     }
     
@@ -60,26 +53,24 @@ class FactMainViewController: BaseViewController {
     init(viewModel: FactViewModel) {
         self.viewModel = viewModel
         super.init()
-        self.title = "Buscar"
+        self.title = "fatos do Chuck!"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setup()
     }
     
     private func setup() {
         self.setupCollectionView()
-        self.setupSearchBinds()
+        self.setupSearch()
+    }
+    
+    private func setupSearch() {
         self.setupSearchView()
-        self.fetchCategories()
+        self.setupSearchBinds()
     }
-    
-    private func fetchCategories() {
-        self.viewModel.categories()
-    }
-    
+
     @available(iOS 11.0, *)
     private func setupSearchView() {
         
@@ -98,25 +89,6 @@ class FactMainViewController: BaseViewController {
             view.trailing == container.trailing
             
         }
-        
-    }
-    
-    private func setupCollectionView() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView.delegate = self
-        self.collectionView.register(cellType: FactCollectionViewCell.self)
-        self.view.backgroundColor = .white
-        self.collectionView.alpha = 0.0
-        self.view.addSubview(self.collectionView)
-        
-        self.viewModel
-            .onFetched
-            .drive(self.collectionView
-                .rx
-                .items(cellIdentifier: FactCollectionViewCell.className, cellType: FactCollectionViewCell.self)) { _, element, cell in
-                    cell.bindData(element)
-                    
-        }.disposed(by: disposeBag)
         
     }
     
@@ -144,27 +116,33 @@ class FactMainViewController: BaseViewController {
                 self.viewModel.fetch(with: query)
             }).disposed(by: disposeBag)
         
-        self.searchController
-            .searchBar
-            .rx
-            .cancelButtonClicked
-            .subscribe(onNext: { (_) in
-                print("test")
-            }).disposed(by: disposeBag)
     }
     
-    private func category(indexPath: IndexPath) -> String {
-        return self.viewModel.categoriesList[indexPath.row]
+    private func setupCollectionView() {
+        setupCollectionViewUI()
+        setupCollectionViewBinds()
     }
     
-    private func categories() -> [String] {
-        return self.viewModel.categoriesList
+    private func setupCollectionViewUI() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionView.delegate = self
+        self.collectionView.register(cellType: FactCollectionViewCell.self)
+        self.view.backgroundColor = .white
+        self.collectionView.alpha = 0.0
+        self.view.addSubview(self.collectionView)
+        
+        
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.tableView?.layoutSubviews()
-        self.tableView?.layoutIfNeeded()
+    private func setupCollectionViewBinds() {
+        self.viewModel
+            .onFetched
+            .drive(self.collectionView
+                .rx
+                .items(cellIdentifier: FactCollectionViewCell.className, cellType: FactCollectionViewCell.self)) { _, element, cell in
+                    cell.bindData(element)
+                    
+        }.disposed(by: disposeBag)
     }
     
 }
