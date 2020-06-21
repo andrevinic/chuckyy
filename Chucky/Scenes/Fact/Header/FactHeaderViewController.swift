@@ -154,7 +154,7 @@ class FactHeaderViewController: BaseViewController {
                     collectionViewRecentSearches.centerX == view.centerX
                     
         }
-        
+    
     }
     
     func unHideRecentSearches() {
