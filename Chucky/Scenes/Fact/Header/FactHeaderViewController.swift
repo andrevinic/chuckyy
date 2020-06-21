@@ -31,6 +31,7 @@ class FactHeaderViewController: BaseViewController {
         let title = UILabel()
         title.text = "Buscas recentes"
         title.font = UIFont.mediumAirbnbFontOfSize(size: 19)
+        title.alpha = 0.0
         return title
     }()
     
@@ -150,11 +151,14 @@ class FactHeaderViewController: BaseViewController {
                     collectionViewRecentSearches.height >= 100
                     collectionViewRecentSearches.top == titleRecentSearches.bottom
                     collectionViewRecentSearches.bottom == view.bottom
-                    
                     collectionViewRecentSearches.centerX == view.centerX
                     
         }
         
+    }
+    
+    func unHideRecentSearches() {
+        self.titleRecentSearches.alpha = 1.0
     }
     
 }

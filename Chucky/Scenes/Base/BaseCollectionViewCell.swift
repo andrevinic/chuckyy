@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class BaseCollectionViewCell: UICollectionViewCell {
+    let disposeBag = DisposeBag()
     func bindData<T: Any>(_ data: T...) {}
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)

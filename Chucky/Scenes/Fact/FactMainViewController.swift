@@ -11,6 +11,10 @@ import RxSwift
 import RxCocoa
 import Cartography
 
+protocol ShareDelegate: class {
+    func share(image: UIImage?)
+}
+
 class FactMainViewController: BaseViewController {
     
     @IBOutlet weak var containerSearchHeader: UIView? {
@@ -115,6 +119,7 @@ class FactMainViewController: BaseViewController {
                 self.viewModel.clearData()
                 self.viewModel.fetch(with: query)
                 self.showCollectionView()
+                self.headerViewController.unHideRecentSearches()
             }).disposed(by: disposeBag)
         
         self.searchController
@@ -164,10 +169,10 @@ class FactMainViewController: BaseViewController {
                 .rx
                 .items(cellIdentifier: FactCollectionViewCell.className, cellType: FactCollectionViewCell.self)) { _, element, cell in
                     cell.bindData(element)
-                    
+                    cell.shareDelegate = self
         }.disposed(by: disposeBag)
     }
-    
+   
 }
 
 extension FactMainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -178,4 +183,13 @@ extension FactMainViewController: UICollectionViewDelegate, UICollectionViewDele
         
         return CGSize(width: width, height: height)
     }
+}
+
+extension FactMainViewController: ShareDelegate {
+       func share(image: UIImage?) {
+          let imageShare = [ image! ]
+          let activityViewController = UIActivityViewController(activityItems: imageShare, applicationActivities: nil)
+          activityViewController.popoverPresentationController?.sourceView = self.view
+          self.present(activityViewController, animated: true, completion: nil)
+      }
 }

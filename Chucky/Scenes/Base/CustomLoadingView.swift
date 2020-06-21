@@ -18,11 +18,12 @@ class CustomLoadingView: UIView {
     }
     
     private func setup() {
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        self.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         self.layer.cornerRadius = 12
         
         let indicator = UIActivityIndicatorView()
         self.addSubview(indicator)
+        self.bringSubviewToFront(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.startAnimating()
         if #available(iOS 13.0, *) {
@@ -35,4 +36,6 @@ class CustomLoadingView: UIView {
             indicator.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
+    
+    
 }

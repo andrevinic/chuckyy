@@ -25,7 +25,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="222" height="125"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FdF-DC-Amx">
-                                <rect key="frame" x="20" y="82.5" width="180" height="22.5"/>
+                                <rect key="frame" x="20" y="85" width="180" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="ef5-zA-ze2"/>
                                 </constraints>
@@ -33,11 +33,17 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQj-6e-oUh">
+                                <rect key="frame" x="182" y="10" width="32" height="32"/>
+                                <state key="normal" image="share"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="FdF-DC-Amx" firstAttribute="leading" secondItem="ayI-P4-XfH" secondAttribute="leading" constant="20" id="RLu-r5-0T9"/>
+                            <constraint firstAttribute="trailing" secondItem="HQj-6e-oUh" secondAttribute="trailing" constant="8" id="aDf-Ig-pYK"/>
                             <constraint firstAttribute="bottom" secondItem="FdF-DC-Amx" secondAttribute="bottom" constant="20" id="hPR-AP-pxA"/>
+                            <constraint firstItem="HQj-6e-oUh" firstAttribute="top" secondItem="ayI-P4-XfH" secondAttribute="top" constant="10" id="x2Y-mY-wzM"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -52,8 +58,12 @@
             <connections>
                 <outlet property="categoriesText" destination="FdF-DC-Amx" id="z6z-38-FFN"/>
                 <outlet property="contentFeedView" destination="ayI-P4-XfH" id="YvC-LO-DGU"/>
+                <outlet property="shareButton" destination="HQj-6e-oUh" id="dLs-uK-oDO"/>
             </connections>
             <point key="canvasLocation" x="265.21739130434787" y="68.638392857142847"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="share" width="32" height="32"/>
+    </resources>
 </document>

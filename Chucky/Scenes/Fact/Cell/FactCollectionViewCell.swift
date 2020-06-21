@@ -11,6 +11,9 @@ import Cartography
 
 class FactCollectionViewCell: BaseCollectionViewCell {
     
+    weak var shareDelegate: ShareDelegate?
+    @IBOutlet weak var shareButton: UIButton!
+    
     @IBOutlet weak var contentFeedView: UIView? { didSet {
         contentFeedView?.backgroundColor = .black
         }
@@ -61,6 +64,13 @@ class FactCollectionViewCell: BaseCollectionViewCell {
             backgroundImage.bottom == contentView.bottom
     
         }
+        
+        self.shareButton
+        .rx
+        .tap
+        .bind {
+            self.shareDelegate?.share(image: self.asImage())
+        }.disposed(by: disposeBag)
     }
     
 }
