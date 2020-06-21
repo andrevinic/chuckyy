@@ -35,7 +35,7 @@ struct Fact: Decodable {
      init(from decoder: Decoder) throws {
          let container = try decoder.container(keyedBy: CodingKeys.self)
          
-         if let categories = try container.decodeIfPresent([String].self, forKey: .categories) {
+         if let categories = try container.decodeIfPresent([String].self, forKey: .categories), !categories.isEmpty {
              self.categories = categories
          } else {
              self.categories = ["UNCATEGORIZED"]

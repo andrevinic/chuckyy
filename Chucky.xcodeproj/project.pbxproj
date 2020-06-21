@@ -63,6 +63,7 @@
 		F0A94744249F073D0064671E /* AirbnbCerealMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A9473E249F073D0064671E /* AirbnbCerealMedium.ttf */; };
 		F0A94745249F073D0064671E /* AirbnbCerealBook.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A9473F249F073D0064671E /* AirbnbCerealBook.ttf */; };
 		F0A94746249F073D0064671E /* AirbnbCerealLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A94740249F073D0064671E /* AirbnbCerealLight.ttf */; };
+		F0A94748249F08470064671E /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A94747249F08470064671E /* UIFont+Utils.swift */; };
 		F0D8A87C249C5CC60073B024 /* UserDefaultFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8A87B249C5CC60073B024 /* UserDefaultFacade.swift */; };
 		F0D8A87E249CE2130073B024 /* Observable+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8A87D249CE2130073B024 /* Observable+Util.swift */; };
 		F0E751192499B45C0015A919 /* TableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E751182499B45C0015A919 /* TableView+Extension.swift */; };
@@ -155,6 +156,7 @@
 		F0A9473E249F073D0064671E /* AirbnbCerealMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealMedium.ttf; sourceTree = "<group>"; };
 		F0A9473F249F073D0064671E /* AirbnbCerealBook.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealBook.ttf; sourceTree = "<group>"; };
 		F0A94740249F073D0064671E /* AirbnbCerealLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AirbnbCerealLight.ttf; sourceTree = "<group>"; };
+		F0A94747249F08470064671E /* UIFont+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
 		F0D8A87B249C5CC60073B024 /* UserDefaultFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultFacade.swift; sourceTree = "<group>"; };
 		F0D8A87D249CE2130073B024 /* Observable+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Util.swift"; sourceTree = "<group>"; };
 		F0E751182499B45C0015A919 /* TableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableView+Extension.swift"; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 				F0D8A87D249CE2130073B024 /* Observable+Util.swift */,
 				F0260622249E39F100B8E98C /* UIView+Extension.swift */,
 				F0A94738249F03D80064671E /* UIImageView+Extension.swift */,
+				F0A94747249F08470064671E /* UIFont+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -751,6 +754,7 @@
 				F09CAC3B249872FB0028229C /* FactCollectionViewCell.swift in Sources */,
 				F09CAC1A24985DE50028229C /* ApiProvider.swift in Sources */,
 				F09CAC35249869ED0028229C /* Global+Extensions.swift in Sources */,
+				F0A94748249F08470064671E /* UIFont+Utils.swift in Sources */,
 				F09CAC1624985BD20028229C /* Bundle+Extensions.swift in Sources */,
 				F09CAC252498608B0028229C /* BaseViewModel.swift in Sources */,
 				F09CAC052498529C0028229C /* Environment.swift in Sources */,

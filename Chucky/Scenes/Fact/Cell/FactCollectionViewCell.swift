@@ -29,7 +29,6 @@ class FactCollectionViewCell: BaseCollectionViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 32)
         return label
     }()
     
@@ -41,8 +40,8 @@ class FactCollectionViewCell: BaseCollectionViewCell {
     override func bindData<T>(_ data: T...) {
         guard let fact = data[0] as? Fact else { return }
         self.title.text = fact.value
-//        self.backgroundImage.loadFrom(url: fact.iconUrl)
         self.categoriesText.text = fact.categories.joined(separator: ",")
+        self.title.font = fact.value.count > 80 ? UIFont.mediumAirbnbFontOfSize(size: 15) : UIFont.mediumAirbnbFontOfSize(size: 32)
     }
     
     private func setup() {
