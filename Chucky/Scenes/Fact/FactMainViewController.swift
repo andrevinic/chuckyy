@@ -109,13 +109,23 @@ class FactMainViewController: BaseViewController {
                 .outSearch
                 .asObservable(),
             query)
-            .subscribe(onNext: { (query) in
+            .subscribe(onNext: { [unowned self] (query) in
                 self.searchController.searchBar.text = query
                 self.searchController.searchBar.becomeFirstResponder()
                 self.viewModel.clearData()
                 self.viewModel.fetch(with: query)
+                self.showCollectionView()
             }).disposed(by: disposeBag)
         
+        self.searchController
+            .searchBar
+            .rx
+            .text
+            .orEmpty
+            .filter({$0.isEmpty})
+            .subscribe(onNext: { [weak self] (_) in
+                self?.hideCollectionView()
+            }).disposed(by: disposeBag)
     }
     
     private func setupCollectionView() {
@@ -131,7 +141,20 @@ class FactMainViewController: BaseViewController {
         self.collectionView.alpha = 0.0
         self.view.addSubview(self.collectionView)
         
-        
+        constrain(self.view, self.collectionView) { (view, collectionView) in
+            collectionView.top == view.top
+            collectionView.leading == view.safeAreaLayoutGuide.leading
+            collectionView.trailing == view.safeAreaLayoutGuide.trailing
+            collectionView.bottom == view.bottom
+        }
+    }
+    
+    private func showCollectionView() {
+        self.collectionView.alpha = 1.0
+    }
+    
+    private func hideCollectionView() {
+        self.collectionView.alpha = 0.0
     }
     
     private func setupCollectionViewBinds() {
