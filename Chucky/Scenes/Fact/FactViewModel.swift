@@ -13,8 +13,8 @@ import RxCocoa
 class FactViewModel: BaseViewModel {
     
     private let factService: FactServiceContract
-    private var facts: [Fact] = []
-    private var categoriesList: [String] = []
+    internal var facts: [Fact] = []
+    internal var categoriesList: [String] = []
     private let _onCategories = PublishSubject<[String]>()
     var onCategories: Driver<[String]> {
         return self._onCategories.asDriver(onErrorJustReturn: [])

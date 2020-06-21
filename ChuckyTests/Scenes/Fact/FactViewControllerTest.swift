@@ -12,20 +12,20 @@ import RxSwift
 
 class FactViewControllerTest: XCTestCase {
 
-    func test_view_number_of_lines_collection_view() {
-        
-        let viewModel = FactViewModel(factService: FactServiceMock(with: .success))
-        let viewController = FactMainViewController(viewModel: viewModel)
-
-        viewModel.fetch(with: "test")
-        UIApplication.shared
-        .windows
-            .filter { $0.isKeyWindow }
-        .first?
-        .rootViewController = viewController
-        
-        XCTAssertEqual(viewController.tableView?.numberOfRows(inSection: 0), 2)
-        
-    }
+//    func test_view_number_of_lines_collection_view() {
+//        
+//        let viewModel = FactViewModel(factService: FactServiceMock(with: .success))
+//        let viewController = FactMainViewController(viewModel: viewModel)
+//
+//        viewModel.fetch(with: "test")
+//        UIApplication.shared
+//        .windows
+//            .filter { $0.isKeyWindow }
+//        .first?
+//        .rootViewController = viewController
+//        
+//        XCTAssertEqual(viewController.tableView?.numberOfRows(inSection: 0), 2)
+//        
+//    }
 
 }

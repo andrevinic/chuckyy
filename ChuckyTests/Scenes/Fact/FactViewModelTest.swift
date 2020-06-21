@@ -13,10 +13,10 @@ import RxSwift
 class FactViewModelTest: XCTestCase {
 
     private let disposeBag = DisposeBag()
-    
+    private let localQuery = UserDefaultFacade()
     func test_fetch_facts_success() {
         let mockService = FactServiceMock(with: .success)
-        let viewModel = FactViewModel(factService: mockService)
+        let viewModel = FactViewModel(factService: mockService, localQuery: localQuery)
         viewModel.fetch(with: "test")
         
         let facts = viewModel.facts
@@ -34,7 +34,7 @@ class FactViewModelTest: XCTestCase {
     
     func test_fetch_facts_with_json() {
         let mockService = FactServiceMock(with: .successWith(jsonFile: "search_query_chuck_success"))
-        let viewModel = FactViewModel(factService: mockService)
+        let viewModel = FactViewModel(factService: mockService, localQuery: localQuery)
         viewModel.fetch(with: "test")
         
         let facts = viewModel.facts
@@ -45,7 +45,7 @@ class FactViewModelTest: XCTestCase {
     
     func test_fetch_empty_error() {
         let mockService = FactServiceMock(with: .empty)
-        let viewModel = FactViewModel(factService: mockService)
+        let viewModel = FactViewModel(factService: mockService, localQuery: localQuery)
         viewModel.fetch(with: "")
         
         let facts = viewModel.facts
@@ -59,7 +59,7 @@ class FactViewModelTest: XCTestCase {
     
     func test_fetch_facts_receive_error() {
         let mockService = FactServiceMock(with: .error)
-        let viewModel = FactViewModel(factService: mockService)
+        let viewModel = FactViewModel(factService: mockService, localQuery: localQuery)
         
         viewModel.fetch(with: "")
         let facts = viewModel.facts
