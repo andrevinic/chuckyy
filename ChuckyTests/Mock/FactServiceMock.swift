@@ -20,7 +20,7 @@ class FactServiceMock: FactServiceContract {
                 
                 SearchResponse(result: [
                     Fact(categories: ["dev", "test"], iconUrl: "1", id: "3", value: "4"),
-                    Fact(categories: ["santos", "bh"], iconUrl: "www.stone.com.br", id: "10", value: "20"),
+                    Fact(categories: ["santos", "bh"], iconUrl: "", id: "10", value: "20"),
                     Fact(categories: ["Italia", "Spain", "UK"], iconUrl: "", id: "3", value: "110")
                     ], total: 3)).map{ $0.result }
         case .successWith(let jsonFile):
